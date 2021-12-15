@@ -123,3 +123,66 @@ def geometric_mean(p):
 
 def geometric_var(p):
     return negative_binomial_var(1, p)
+
+
+def continuous_uniform_mean(low, high):
+    return (high + low) / 2
+
+def continuous_uniform_var(low, high):
+    return ((high - low) ** 2) / 12
+
+
+def normal_mean(loc, scale):
+    return loc
+
+def normal_var(loc, scale):
+    return scale ** 2
+
+
+def gamma_mean(shape, scale):
+    return shape * scale
+
+def gamma_var(shape, scale):
+    return shape * scale ** 2
+
+
+def exponential_mean(scale):
+    return gamma_mean(1, scale)
+
+def exponential_var(scale):
+    return gamma_var(1, scale)
+
+
+def chisquare_mean(df):
+    return gamma_mean(df / 2, 2)
+
+def chisquare_var(df):
+    return gamma_var(df / 2, 2)
+
+
+def beta_mean(a, b):
+    return a / (a + b)
+
+def beta_var(a, b):
+    return (a * b) / ((a + b) ** 2 * (a + b + 1))
+
+
+def laplace_mean(loc, scale):
+    return loc
+
+def laplace_var(loc, scale):
+    return 2 * scale ** 2
+
+
+def standard_t_mean(df):
+    return 0
+
+def standard_t_var(df):
+    return df / (df - 2)
+
+
+def f_mean(dfnum, dfden):
+    return dfden / (dfden - 2)
+
+def f_var(dfnum, dfden):
+    return (2 * dfden**2 * (dfnum + dfden - 2)) / (dfnum * (dfden - 2)**2 * (dfden - 4))

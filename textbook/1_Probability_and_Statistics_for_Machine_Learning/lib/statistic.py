@@ -140,3 +140,31 @@ def get_statistical_information(event_list, print_flag: bool = False):
         plot_hist(array)
 
     return info
+
+
+def cov(a, b):
+    """Return the covariance value
+    Args:
+        a (np.ndarray):
+        b (np.ndarray):
+    """
+    a, b = np.array(a), np.array(b)
+    a_mean = mean(a)
+    b_mean = mean(b)
+    v = mean((a - a_mean) * (b - b_mean))
+    return v
+
+
+def corrcoef(a, b):
+    """Return the correlation coefficient value
+    Args:
+        a (np.ndarray):
+        b (np.ndarray):
+    """
+    a, b = np.array(a), np.array(b)
+    cov_value = cov(a, b)
+    a_std = std(a)
+    b_std = std(b)
+    if a_std == 0 or b_std == 0:
+        return None
+    return cov_value / a_std / b_std

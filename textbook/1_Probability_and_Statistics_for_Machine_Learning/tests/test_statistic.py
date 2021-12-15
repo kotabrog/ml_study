@@ -7,7 +7,8 @@ sys.path.append("lib")
 
 from statistic import mean, var, std, skew,\
                           kurtosis, moment, median,\
-                          partitive_point, mode
+                          partitive_point, mode,\
+                          cov, corrcoef
 
 
 def test_mean_corner_01():
@@ -189,3 +190,51 @@ def test_mode_normal_01():
 def test_mode_normal_02():
     array = np.array([0, 1, 2, 3, 4, 5])
     assert(mode(array) == np.array([0, 1, 2, 3, 4, 5])).all()
+
+
+def test_cov_corner_01():
+    array = np.array([])
+    assert cov(array, array) == 0
+
+def test_cov_normal_01():
+    a = np.array([0, 1, 2, 3, 4, 5])
+    b = np.array([5, 4, 3, 2, 1, 0])
+    assert np.abs(cov(a, b) - np.cov(a, b, bias=True)[0][1]) < 1e-5
+
+def test_cov_normal_02():
+    _mean = np.array([0, 0])
+    _cov = np.array([[1, 0.5], [0.5, 1]])
+    x, y = np.random.multivariate_normal(_mean, _cov, 1000).T
+    assert np.abs(cov(x, y) - np.cov(x, y, bias=True)[0][1]) < 1e-5
+
+def test_cov_normal_03():
+    _mean = np.array([2, 1])
+    _cov = np.array([[1, -0.95], [-0.95, 1]])
+    x, y = np.random.multivariate_normal(_mean, _cov, 1000).T
+    assert np.abs(cov(x, y) - np.cov(x, y, bias=True)[0][1]) < 1e-5
+
+
+def test_corrcoef_corner_01():
+    array = np.array([])
+    assert corrcoef(array, array) is None
+
+def test_corrcoef_corner_02():
+    array = np.array([0, 0, 0])
+    assert corrcoef(array, array) is None
+
+def test_corrcoef_normal_01():
+    a = np.array([0, 1, 2, 3, 4, 5])
+    b = np.array([5, 4, 3, 2, 1, 0])
+    assert np.abs(corrcoef(a, b) - np.corrcoef(a, b)[0][1]) < 1e-5
+
+def test_corrcoef_normal_02():
+    _mean = np.array([0, 0])
+    _cov = np.array([[1, 0.5], [0.5, 1]])
+    x, y = np.random.multivariate_normal(_mean, _cov, 1000).T
+    assert np.abs(corrcoef(x, y) - np.corrcoef(x, y)[0][1]) < 1e-5
+
+def test_corrcoef_normal_03():
+    _mean = np.array([2, 1])
+    _cov = np.array([[1, -0.95], [-0.95, 1]])
+    x, y = np.random.multivariate_normal(_mean, _cov, 1000).T
+    assert np.abs(corrcoef(x, y) - np.corrcoef(x, y)[0][1]) < 1e-5
