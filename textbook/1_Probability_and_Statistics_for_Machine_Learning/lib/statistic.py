@@ -4,13 +4,17 @@ import math
 from plot import plot_hist
 
 
-def mean(array):
+def mean(array, multi=False):
     """Return the average value
     Args:
         array (np.ndarray): Target array
+        multi (bool, optional):
+            If True is specified, calculate per column
     """
     if len(array) == 0:
         return 0
+    if multi:
+        return np.sum(array, axis=0) / len(array)
     return np.sum(array) / len(array)
 
 
@@ -168,3 +172,10 @@ def corrcoef(a, b):
     if a_std == 0 or b_std == 0:
         return None
     return cov_value / a_std / b_std
+
+def covariance_matrix(array):
+    n = len(array[0])
+    array = np.array(array)
+    return np.array([[cov(array[:, i], array[:, j])
+                    for i in range(n)]
+                    for j in range(n)])

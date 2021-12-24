@@ -111,3 +111,24 @@ def make_np_f(dfnum, dfden):
     def func():
         return rng.f(dfnum, dfden)
     return func
+
+
+def make_np_multinomial(n, pvals):
+    rng = np.random.default_rng()
+    def func():
+        return rng.multinomial(n, pvals)
+    return func
+
+
+def make_np_multivariate_normal(mean, cov):
+    rng = np.random.default_rng()
+    def func():
+        return rng.multivariate_normal(mean, cov)
+    return func
+
+
+def make_np_dirichlet(alpha):
+    rng = np.random.default_rng()
+    def func():
+        return rng.dirichlet(alpha)
+    return func

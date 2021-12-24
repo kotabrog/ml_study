@@ -186,3 +186,37 @@ def f_mean(dfnum, dfden):
 
 def f_var(dfnum, dfden):
     return (2 * dfden**2 * (dfnum + dfden - 2)) / (dfnum * (dfden - 2)**2 * (dfden - 4))
+
+
+def multinomial_mean(n, pvals):
+    return n * np.array(pvals)
+
+def multinomial_var(n, pvals):
+    var_array = np.array([[-n * p1 * p2
+                         for p2 in pvals]
+                         for p1 in pvals])
+    for i, p in enumerate(pvals):
+        var_array[i][i] = n * p * (1 - p)
+    return var_array
+
+
+def multivariate_normal_mean(mean, cov):
+    return np.array(mean)
+
+def multivariate_normal_var(mean, cov):
+    return np.array(cov)
+
+
+def dirichlet_mean(alpha):
+    sum_alpha = sum(alpha)
+    return np.array(alpha) / sum_alpha
+
+def dirichlet_var(alpha):
+    sum_alpha = sum(alpha)
+    denominator = sum_alpha * sum_alpha * (sum_alpha + 1)
+    var_array = np.array([[-a1 * a2
+                         for a2 in alpha]
+                         for a1 in alpha])
+    for i, a in enumerate(alpha):
+        var_array[i][i] = a * (sum_alpha - a)
+    return var_array / denominator
